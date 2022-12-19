@@ -7,22 +7,23 @@
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         
+        
+        ## create recursive function
 
-        def validate(root):
-
-            if root == None or root.val ==0:
+        def valid(node, left, right):
+            if not node:
                 return True
-        
-            if root.left and root.left.val >= root.val: 
+            
+            # if the node val is not between left and right returns false
+            if not (node.val < right and node.val > left):
                 return False
-
-            elif root.right and root.right.val <=  root.val:
-                return False
-    
-            else:
-                left = validate(root.left)
-                right = validate(root.right)
-                return left and right
+            
+            ## when validating left tree, change left upper limit to the value fo the previous node.
+            ## when validating right tree, change the lower limit to the value of the previous node.
+            return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
+            
+            
+        return valid(root, float ("-inf"), float("inf"))
         
-        return validate(root)
+        
         
